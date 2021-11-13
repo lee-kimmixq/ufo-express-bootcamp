@@ -21,6 +21,8 @@ app.use(cookieParser());
 
 moment.defaultFormat = 'DD.MM.YY HH:mm';
 
+const PORT = process.argv[2];
+
 // main page - list of all sightings
 app.get('/', (req, res) => {
   read('data.json', (readErr, content) => {
@@ -360,4 +362,4 @@ app.get('/favourites', (req, res) => {
   });
 });
 
-app.listen(3004);
+app.listen(PORT);
