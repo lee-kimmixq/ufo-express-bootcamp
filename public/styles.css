@@ -1,0 +1,22 @@
+body {
+  background-color: black;
+}
+
+h1 {
+  padding: 15px;
+}
+
+form {
+  display: inline;
+}
+
+.fixed-navbar {
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  z-index: 1;
+  width: 100%; /* Full width */
+}
+
+.big-container {
+  margin-top: 60px;
+}

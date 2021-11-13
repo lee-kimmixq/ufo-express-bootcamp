@@ -1,0 +1,11 @@
+<%- include('header', {title: "UFO Files"}); -%>
+<div class="container">
+  <h1>Shapes</h1>
+
+  <ul>
+    <% shapes.forEach((shape, index) => { %>
+    <li><a href="/shapes/<%=shape.toLowerCase()%>"><h3 class="text-warning"><%=shape%></h3></li>
+    <% }) %> 
+  </ul>
+</div>
+<%- include('footer'); -%>

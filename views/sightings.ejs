@@ -1,0 +1,28 @@
+<%- include('header', {title: "UFO Files"}); -%>
+<div class="container">
+  <% const number = Number(index) + 1 %>
+  <h1 style="padding-left: 0px;">Sighting #<%=number%></h1>
+  <p><b><%=date%> | <%=sighting.city%>, <%=sighting.state%></b></p>
+  <p><b>Shape: <%= sighting.shape%></b></p>
+  <p><b>Time Observed: <%= sighting.duration%></b></p>
+  <p><%= sighting.text%></p>
+
+  <p>
+    <i>Sighted <%=sighted%>; Created <%=created%>; Last edited <%=edited%></i>
+  </p>
+  <a href="/sightings/<%=index%>/edit" class="btn btn-secondary btn-sm">Edit</a>
+  <form action="?_method=DELETE" method="POST">
+    <input type="submit" class="btn btn-danger btn-sm" value="Delete" />
+  </form>
+  <a href="/favourites/<%=index%>" class="btn btn-primary btn-sm">
+    <% if (isFav) { %>
+      Unfavourite
+    <% } else { %>
+      Favourite!
+    <% } %>
+  </a>
+
+  <br><br>
+  <a href="/"><p>< Back to All Sightings</p></a>
+</div>
+<%- include('footer'); -%>

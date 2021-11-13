@@ -1,0 +1,67 @@
+<%- include('header', {title: "Favourites"}); -%>
+<div class="container">
+  <h1>Favourites</h1>
+  <div style="padding-left: 15px;">
+    <a href="/sightings"><button class="btn btn-primary" role="button">
+      <b>+</b> &nbsp New Sighting</button></a>
+    <div class="btn-group">
+      <button
+        type="button"
+        class="btn btn-info dropdown-toggle"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        Sort By
+      </button>
+      <div class="dropdown-menu">
+        <% if (sort === "date_time" && order === "asc") { %> 
+          <a class="dropdown-item" href="?sort=date_time&order=desc">Date ↑</a>
+        <% } else if (sort === "date_time" && order === "desc") { %>
+          <a class="dropdown-item" href="?sort=date_time&order=asc">Date ↓</a>
+        <% } else { %>
+          <a class="dropdown-item" href="?sort=date_time&order=asc">Date</a>
+        <% } %>
+        <% if (sort === "shape" && order === "asc") { %> 
+          <a class="dropdown-item" href="?sort=shape&order=desc">Shape ↑</a>
+        <% } else if (sort === "shape" && order === "desc") { %>
+          <a class="dropdown-item" href="?sort=shape&order=asc">Shape ↓</a>
+        <% } else { %>
+          <a class="dropdown-item" href="?sort=shape&order=asc">Shape</a>
+        <% } %>
+        <% if (sort === "city" && order === "asc") { %> 
+          <a class="dropdown-item" href="?sort=city&order=desc">City ↑</a>
+        <% } else if (sort === "city" && order === "desc") { %>
+          <a class="dropdown-item" href="?sort=city&order=asc">City ↓</a>
+        <% } else { %>
+          <a class="dropdown-item" href="?sort=city&order=asc">City</a>
+        <% } %>
+      </div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-outline-secondary">Show Per Page</button>
+      <% ["5", "10", "All"].forEach((element) => { %>
+        <% if (element.toLowerCase() === show) { %>
+          <a href="?page=1&show=<%=element.toLowerCase()%>"><button class="btn btn-outline-secondary btn-inverse-light"><%=element%></button></a>
+        <% } else { %>
+          <a href="?page=1&show=<%=element.toLowerCase()%>"><button class="btn btn-outline-secondary btn-dark"><%=element%></button></a>
+        <% } %>
+      <% }) %>
+    </div>
+  </div>
+  <br />
+  <%- include ('list'), {sightings} -%>
+  <div class="row justify-content-center">
+    <div class="btn btn-group">
+      <% if (show === "all") { show = sightings.length } %>
+    <% for (let i = 1; i <= Math.ceil((sightings.length)/show); i+=1) { %>
+      <% if (Number(page) === i) { %>
+        <a href="?page=<%=i%>&show=<%=show%>"><button class="btn btn-secondary"><%=i%></button></a>
+      <% } else { %>
+        <a href="?page=<%=i%>&show=<%=show%>"><button class="btn btn-inverse-secondary"><%=i%></button></a>
+      <% } %>
+    <% } %>
+    </div>
+  </div>
+</div>
+<%- include('footer'); -%>

@@ -1,0 +1,137 @@
+<%- include('header', {title: "Edit Sighting"}); -%>
+<div class="container">
+<h1>Edit Sighting</h1>
+
+<form action="./?_method=PUT" method="POST">
+  <div class="form-row" style="padding-left: 10px;">
+    <div class="form-group col-6">
+      <label for="date" class="col-form-label">Date</label>
+      <div class="form-row " style="padding-left: 5px;">
+        <% const dateAndTime = sighting.date_time.split(" ") %>
+        <% const dayMthYr = dateAndTime[0].split("/") %>
+        <% const hrMin = dateAndTime[1].split(":") %>
+        <select class="form-control col-4 col-md-2" name="dd" id="dd">
+          <option>Day</option>
+          <% for(let i=1; i <= 31; i += 1) { %>
+            <% if (i === Number(dayMthYr[0])) { %>
+              <option value="<%=i%>" selected><%=i%></option>
+            <% } else { %>
+              <option value="<%=i%>"><%=i%></option>
+            <% } %>
+          <% } %>
+        </select>
+        <select class="form-control col-4 col-md-2" name="mm" id="mm">
+          <option>Month</option>
+          <% for(let j=1; j <= 12; j += 1) { %>
+            <% if (j === Number(dayMthYr[1])) { %>
+              <option value="<%=j%>" selected><%=j%></option>
+            <% } else { %>
+              <option value="<%=j%>"><%=j%></option>
+            <% } %>
+          <% } %>
+        </select>
+        <select class="form-control col-4 col-md-2" name="yy" id="yy">
+          <option>Year</option>
+          <% for(let k=2021; k > 1990; k -= 1) { %>
+            <% const shortK = k.toString().slice(2) %>
+            <% if (shortK === dayMthYr[2]) { %>
+               <option value="<%=shortK%>" selected><%=k%></option>
+              <% } else { %>
+               <option value="<%=shortK%>"><%=k%></option>
+            <% } %>
+          <%}%> 
+        </select>
+      </div>
+    </div>
+    <div class="form-group col-6" style="padding-left: 12px;">
+      <label for="time" class="col-form-label">Time</label>
+      <div class="form-row " style="padding-left: 5px;">
+        <select class="form-control col-5 col-md-2" name="hours" id="hours">
+          <option>Hour</option>
+          <% for(let m=0; m <= 23; m += 1) { %>
+            <% const hour = m.toString().padStart(2,'0') %>
+            <% if (hour === hrMin[0]) { %>
+              <option value="<%=hour%>" selected><%=hour%></option>
+            <% } else { %>
+              <option value="<%=hour%>"><%=hour%></option>
+            <% } %>
+          <%}%>
+        </select>
+        <select class="form-control col-5 col-md-2" name="mins" id="mins">
+          <option>Minutes</option>
+          <% for(let n=0; n <= 55; n += 5) { %>
+            <% const min = n.toString().padStart(2,'0') %>
+            <% if (min === hrMin[1]) { %>
+              <option value="<%=min%>" selected><%=min%></option>
+            <% } else { %>
+              <option value="<%=min%>"><%=min%></option>
+            <% } %>
+          <%}%>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-6">
+      <label for="city" class="col col-form-label">City</label>
+      <div class="col-12">
+        <input type="text" class="form-control" name="city" id="city" value="<%=sighting.city%>" />
+      </div>
+    </div>
+    <div class="form-group col-6">
+      <label for="state" class="col col-form-label">State</label>
+      <div class="col-12">
+        <input type="text" class="form-control" name="state" id="state" value="<%=sighting.state%>" />
+      </div>
+    </div>
+  </div>
+  <div class="form-row" style="padding-left: 12px;">
+    <fieldset class="form-group col-6">
+      <div class="form-row">
+        <label for="shape" class="col col-form-label">Shape</label>
+        <div class="col col-10">
+          <% shapes.forEach((shape) => {%>
+            <div class="form-check">
+              <% if (shape === sighting.shape) { %>
+                <input class="form-check-input" type="radio" name="shape" value="<%=shape%>" checked>
+              <% } else { %>
+                <input class="form-check-input" type="radio" name="shape" value="<%=shape%>">
+              <% } %>
+              <label class="form-check-label">
+                <%=shape%>
+              </label>
+            </div>
+          <%})%>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="shape" value="others">
+            <label class="form-check-label">
+              Others
+            </label>
+            <input type="text" class="form-control" name="other_shape" id="other_shape" />
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <div class="form-group">
+    <label for="duration" class="col-5 col-form-label">Duration (in minutes)</label>
+    <div class="col-3">
+      <% const duration = sighting.duration.split(" ")[0] %>
+      <input type="text" class="form-control" name="duration" id="duration" value="<%=duration%>"/>
+    </div>
+  <div class="form-group">
+    <label for="text" class="col-2 col-form-label">Details</label>
+    <div class="col-12">
+      <textarea type="text" class="form-control" name="text" id="text"><%=sighting.text%></textarea>
+    </div>
+  </div>
+
+  <div style="padding-left: 12px;">
+    <input class="btn btn-primary" type="submit" value="Submit" />
+    <input class="btn btn-danger" type="reset" />
+  </div>
+</form>
+<br>
+<a href="/"><p style="padding-left: 12px;">< Back to All Sightings</p></a>
+</div>
+<%- include('footer'); -%>
